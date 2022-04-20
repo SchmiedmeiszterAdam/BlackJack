@@ -2,6 +2,9 @@ package view;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class MainForm extends javax.swing.JFrame {
 
@@ -11,8 +14,25 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     public void kepMegjelenit() {
-        ImageIcon imgThisImg = new ImageIcon("view/res/Blackjack-singlehand.jpg");
-        singleHandKep.setIcon(imgThisImg);
+        singleHandKep.setIcon(new ImageIcon(this.getClass().getResource("/view/res/Blackjack-singlehand.jpg")));
+    }
+
+    public void megnyitas() {
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("*jpg és *gif", "jpg", "gif");
+        FileNameExtensionFilter filter2 = new FileNameExtensionFilter("*txt", "txt");
+        fileChooser.setFileFilter(filter);
+        fileChooser.setFileFilter(filter2);
+        fileChooser.showOpenDialog(this);
+        java.io.File f = fileChooser.getSelectedFile();
+        felugro(f.getName(), f.getPath());
+    }
+
+    public void felugro(String fajlnev, String eleres) {
+        String ObjButtons[] = {"ok", "Cancel"};
+        Icon icon = new ImageIcon(this.getClass().getResource("/view/res/ikon.jpg"));
+        int kilepes = JOptionPane.showOptionDialog(null, fajlnev + "\n" + eleres, "Kérdés",  JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, icon, ObjButtons, ObjButtons[1]);
+
     }
 
     /**
@@ -48,9 +68,14 @@ public class MainForm extends javax.swing.JFrame {
         jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
         jRadioButtonMenuItem2 = new javax.swing.JRadioButtonMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("BlackJack");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Ellenfél"));
 
@@ -130,6 +155,11 @@ public class MainForm extends javax.swing.JFrame {
         jRadioButton2.setText("lapok összértéke");
 
         jButton3.setText("Mentés");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Kilépés");
 
@@ -166,6 +196,11 @@ public class MainForm extends javax.swing.JFrame {
         jMenu1.setText("File");
 
         jMenuItem1.setText("Mentés");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setText("Kilépés");
@@ -231,6 +266,18 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        megnyitas();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        megnyitas();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        kilepes();
+    }//GEN-LAST:event_formWindowClosing
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -288,4 +335,13 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem2;
     private javax.swing.JLabel singleHandKep;
     // End of variables declaration//GEN-END:variables
+
+    private void kilepes() {
+//        if (!jRadioButton1.isSelected() && !jRadioButton2.isSelected()) {
+//            System.exit(0);
+//        }
+//        else{
+//            
+//        }
+    }
 }
